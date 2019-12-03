@@ -12,7 +12,7 @@ from easyschool.utils import GENDER_CHOICES, MONTHS_CHOICE
 # Create your models here.
 
 def next_month():
-    month = date.today().month+1
+    month = date.today().month
     year = date.today().year
     day = 1
     return date(year, month, day)

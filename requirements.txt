@@ -10,3 +10,4 @@ Markdown==2.6.11
 Pillow==5.2.0
 pytz==2018.5
 sqlparse==0.3.0
+flake8==3.7.9
