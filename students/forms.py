@@ -1,3 +1,4 @@
+import time
 from calendar import month_name
 
 from django import forms
@@ -10,18 +11,15 @@ class StudentFeeAdd(forms.ModelForm):
 
     def clean(self):
         """Checks if the fee for this month has been submitted"""
-        student = self.cleaned_data['student']
-        fee_group=self.cleaned_data['fee_group']
-        valid = self.cleaned_data['valid_until']
-        qs = StudentFee.objects.filter(
-            student=student,
-            fee_group=fee_group,
-            valid_until = valid,
+        try:
+            StudentFee.objects.get(
+                student=self.cleaned_data['student'],
+                fee_group=self.cleaned_data['fee_group'],
+                valid_until=self.cleaned_data['valid_until'],
             )
-
-        if len(qs) is not 0:
-            raise forms.ValidationError("Fee for this month has been submitted.")
-        return self.cleaned_data
+        except StudentFee.DoesNotExist:
+            return self.cleaned_data
+        raise forms.ValidationError("Fee for this month has been submitted.")
 
     class Meta:
         model = StudentFee
